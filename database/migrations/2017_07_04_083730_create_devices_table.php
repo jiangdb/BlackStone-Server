@@ -15,10 +15,12 @@ class CreateDevicesTable extends Migration
     {
         Schema::create('devices', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('model_number');
             $table->string('serial_number');
-            $table->string('ip_address');
-            $table->string('latitude');
-            $table->string('longitude');
+            $table->string('fw_version');
+            $table->string('ip_address')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
             $table->timestamps();
         });
     }

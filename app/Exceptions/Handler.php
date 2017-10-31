@@ -44,6 +44,11 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        //force api response to json
+        if ($exception instanceof ApiValidationFailedException) {
+            return $exception->response();
+        }
+
         return parent::render($request, $exception);
     }
 

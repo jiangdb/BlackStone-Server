@@ -17,11 +17,18 @@ class CreateWorksTable extends Migration
             $table->increments('id');
             $table->integer('device_id')->unsigned();
             $table->integer('user_id')->unsigned();
-            $table->integer('views')->unsigned();
-            $table->integer('likes')->unsigned();
-            $table->integer('unlikes')->unsigned();
-            $table->timestamp('start_at');
-            $table->timestamp('end_at');
+            $table->string('bean_category')->nullable();
+            $table->string('bean_weight')->nullable();
+            $table->string('water_ratio')->nullable();
+            $table->string('water_weight')->nullable();
+            $table->string('work_time')->nullable();
+            $table->smallInteger('rating')->nullable();
+            $table->string('flavor')->nullable();
+            $table->string('feeling')->nullable();
+            $table->string('thumbnail')->nullable();
+            $table->integer('views')->unsigned()->nullable();
+            $table->integer('likes')->unsigned()->nullable();
+            $table->integer('unlikes')->unsigned()->nullable();
             $table->timestamps();
         });
     }

@@ -15,10 +15,9 @@ class CreateWorkProceduresTable extends Migration
     {
         Schema::create('work_procedures', function (Blueprint $table) {
             $table->integer('work_id')->unsigned();
-            $table->timestamp('timestamp');
+            $table->integer('time_in_ms');
             $table->string('data1');
             $table->string('data2');
-            $table->timestamps();
         });
     }
 
