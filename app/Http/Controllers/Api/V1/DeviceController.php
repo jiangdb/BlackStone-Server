@@ -31,6 +31,31 @@ class DeviceController extends ApiController
         return $this->responseSuccess();
     }
 
+    public function online(Request $request)
+    {
+        $this->validate($request, [
+            'model_number'  => 'required|max:255',
+            'serial_number' => 'required|string|size:12',
+            'fw_version'    => 'required|string|size:7',
+            'ip_address'    => 'nullable',
+        ]);
+
+        $device = Device::where('model_number', $request->model_number)
+            ->where('serial_number', $request->serial_number)->first();
+        if ($device == NULL) {
+            return $this->responseNotFoundWithMessage();
+        }
+
+        if ($device->fw_version != $request->fw_version) {
+            $device->fw_version = $request->fw_version;
+        }
+        if ($device->ip_address != $request->ip_address) {
+            $device->ip_address = $request->ip_address;
+        }
+        $device->save();
+        return $this->responseSuccess();
+    }
+
     public function getOta(Request $request, $model)
     {
         $this->validate($request, [

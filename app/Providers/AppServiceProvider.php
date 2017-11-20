@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\WeiXinService;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -26,5 +27,8 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
+        $this->app->singleton(WeiXinService::class, function ($app) {
+            return new WeiXinService();
+        });
     }
 }

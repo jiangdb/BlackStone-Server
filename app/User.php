@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\WxUser;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -26,4 +27,18 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * RelationShips
+     */
+
+    /**
+     * One user has one weixin user
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function wx_user()
+    {
+        return $this->hasOne(WxUser::class);
+    }
+
 }

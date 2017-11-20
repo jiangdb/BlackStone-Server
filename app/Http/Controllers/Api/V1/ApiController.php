@@ -14,8 +14,10 @@ abstract class ApiController extends Controller
     const STATUS_ERROR      = 'error';
     const STATUS_SUCCESS    = 'success';
 
-    const CODE_SUCCESS   = 200;
-    const CODE_NOT_FOUND = 404;
+    const CODE_SUCCESS      = 200;
+    const CODE_BAD_REQUEST  = 400;
+    const CODE_NOT_ALLOWED  = 403;
+    const CODE_NOT_FOUND    = 404;
 
     public function validate(Request $request, array $rules, array $messages = [], array $customAttributes = [])
     {
@@ -45,21 +47,6 @@ abstract class ApiController extends Controller
     }
 
     /**
-     * @param string $message
-     * @return mixed
-     */
-    protected function responseNotFoundWithMessage($message = 'Not found')
-    {
-        return $this->setStatusCode(self::CODE_NOT_FOUND)
-            ->response(
-                [
-                'status' => self::STATUS_ERROR,
-                'message' => $message
-                ]
-            );
-    }
-
-    /**
      * @param array $data
      * @param array $headers
      * @return mixed
@@ -68,6 +55,60 @@ abstract class ApiController extends Controller
     {
         return Response::json($data, $this->getStatusCode(), $headers);
     }
+
+    /**
+     * @return mixed
+     */
+    protected function responseBadRequestWithMessage($message = 'Bad Request')
+    {
+        return $this->setStatusCode(self::CODE_BAD_REQUEST)
+            ->response(
+                [
+                    'status' => self::STATUS_ERROR,
+                    'message' => $message
+                ]
+            );
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function responseNotAllowedWithMessage($message = 'Not allowed')
+    {
+        return $this->setStatusCode(self::CODE_NOT_ALLOWED)
+            ->response(
+                [
+                    'status' => self::STATUS_ERROR,
+                    'message' => $message
+                ]
+            );
+    }
+
+    /**
+     * @param string $message
+     * @return mixed
+     */
+    protected function responseNotFoundWithMessage($message = 'Not found')
+    {
+        return $this->setStatusCode(self::CODE_NOT_FOUND)
+            ->response(
+                [
+                    'status' => self::STATUS_ERROR,
+                    'message' => $message
+                ]
+            );
+    }
+
+    protected function responseErrorWithMessage($message)
+    {
+        return $this->setStatusCode(self::CODE_SUCCESS)
+            ->response([
+                    'status' => self::STATUS_ERROR,
+                    'message' => $message,
+                ]
+            );
+    }
+
 
     /**
      * @param $message
