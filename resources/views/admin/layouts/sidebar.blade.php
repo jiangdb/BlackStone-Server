@@ -19,6 +19,9 @@
                 <a href="{{ route('admin.firmware.index') }}"><i class="fa fa-file fa-fw"></i> Firmware</a>
             </li>
             <li>
+                <a href="{{ route('admin.devices.index') }}"><i class="fa fa-tablet fa-fw"></i> Devices</a>
+            </li>
+            <li>
                 <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>

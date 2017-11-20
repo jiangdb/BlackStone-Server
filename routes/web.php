@@ -24,4 +24,5 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'as' => 'admin.', 'na
 
     Route::get('firmware/{firmware}/download', 'FirmwareController@download')->name('firmware.download');
     Route::resource('firmware', 'FirmwareController');
+    Route::resource('devices', 'DeviceController');
 });
