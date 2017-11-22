@@ -14,9 +14,7 @@
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Firmwares
-                    <a class="btn btn-small btn-primary pull-right" href="{{ route('admin.firmware.create') }}">New</a>
-                </h1>
+                <h1 class="page-header">Devices</h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>
