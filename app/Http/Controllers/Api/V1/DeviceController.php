@@ -4,10 +4,26 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Models\Device;
 use App\Models\Firmware;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DeviceController extends ApiController
 {
+    public function index(Request $request)
+    {
+        if ($request->has('date')) {
+            $date = new Carbon($request->input('date'));
+            $devices = Device::whereDate('created_at', $date)
+                ->orderBy('created_at','desc')->paginate(10);
+        }else{
+            $devices = Device::select(DB::raw('date(created_at) as dates'), DB::raw('count(*) as count'))
+                ->groupBy('dates')->orderBy('dates', 'desc')->simplePaginate(1);
+        }
+
+        return $this->responseSuccessWithExtrasAndMessage($devices->toArray());
+    }
+
     public function register(Request $request)
     {
         $this->validate($request, [
@@ -28,7 +44,8 @@ class DeviceController extends ApiController
             'longitude'
         ]));
 
-        return $this->responseSuccess();
+        $count = Device::whereDate('created_at', Carbon::today())->count();
+        return $this->responseSuccessWithExtrasAndMessage(['total' => $count]);
     }
 
     public function online(Request $request)

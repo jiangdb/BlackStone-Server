@@ -26,6 +26,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api\V1', 'as' => 'api.v1.'], fun
     });
 
     Route::group(['prefix' => 'device', 'as' => 'device.'], function() {
+        Route::get('/', 'DeviceController@index')->name('index');
         Route::post('/register', 'DeviceController@register')->name('register');
         Route::put('/online', 'DeviceController@online')->name('online');
         Route::get('/ota/{model}', 'DeviceController@getOta')->name('ota');
