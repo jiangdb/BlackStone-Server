@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Work;
 use App\Models\WxUser;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -39,6 +40,14 @@ class User extends Authenticatable
     public function wx_user()
     {
         return $this->hasOne(WxUser::class);
+    }
+
+    /**
+     * One user has many works
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function works() {
+        return $this->hasMany(Work::class);
     }
 
 }

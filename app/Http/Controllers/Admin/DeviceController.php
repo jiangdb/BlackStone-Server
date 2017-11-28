@@ -15,8 +15,51 @@ class DeviceController extends Controller
      */
     public function index()
     {
-        $devices = Device::all();
-        return view('admin.device.index', compact('devices'));
+        return view('admin.device.index');
+    }
+
+    public function getDevices(Request $request)
+    {
+        $total = Device::count();
+
+        $draw = $request->input('draw');
+        $start = $request->input('start');
+        $length = $request->input('length');
+        $order = $request->input('order');
+        $columns = $request->input('columns');
+        $search = $request->input('search');
+
+        $devices = Device::offset($start)->limit($length)
+            ->when($order, function ($query) use ($order, $columns) {
+                return $query->orderBy($columns[$order[0]['column']]['name'], $order[0]['dir']);
+            })
+            ->when($search, function ($query) use ($search) {
+                return $query->where('model_number', 'like', '%'.$search['value'].'%')
+                    ->orWhere('serial_number', 'like', '%'.$search['value'].'%')
+                    ->orWhere('fw_version', 'like', '%'.$search['value'].'%')
+                    ->orWhere('ip_address', 'like', '%'.$search['value'].'%')
+                    ->orWhere('created_at', 'like', '%'.$search['value'].'%');
+            })
+            ->get();
+
+        $data = [];
+        foreach ($devices as $device) {
+            $data[] = [
+                'id'        => $device->id,
+                'model'     => $device->model_number,
+                'serial'    => $device->serial_number,
+                'version'   => $device->fw_version,
+                'ip'        => $device->ip_address,
+                'created_at'=> $device->created_at->toDateTimeString(),
+            ];
+        }
+        $result = [
+            'draw'              =>$draw,
+            'recordsTotal'      =>$total,
+            'recordsFiltered'   =>$total,
+            'data'              =>$data
+        ];
+        return response()->json($result);
     }
 
     /**

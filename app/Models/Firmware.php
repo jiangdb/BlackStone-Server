@@ -16,7 +16,7 @@ class Firmware extends Model
      * @var array
      */
     protected $fillable = [
-        'model_number', 'version', 'version_code', 'path', 'md5'
+        'model_number', 'description', 'version', 'version_code', 'path', 'md5'
     ];
 
     /**

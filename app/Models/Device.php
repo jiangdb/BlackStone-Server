@@ -15,4 +15,15 @@ class Device extends Model
         'model_number', 'serial_number', 'fw_version', 'ip_address', 'latitude', 'longitude'
     ];
 
+    /**
+     * RelationShips
+     */
+
+    /**
+     * One device has many works
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function works() {
+        return $this->hasMany(Work::class);
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Services\WeiXinService;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
@@ -11,10 +12,6 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class UserController extends ApiController
 {
-    function __construct()
-    {
-    }
-
     public function login(Request $request, WeiXinService $wxService)
     {
         if (!$request->filled('code')) {
@@ -36,7 +33,7 @@ class UserController extends ApiController
         if ($user == null) {
             $user = User::create([
                 'name'     => 'auto',
-                'email'    => 'auto@localhost.com',
+                'email'    => $res->openid.'@bm.com',
                 'password' => Hash::make(str_random(16))
             ]);
             $user->wx_user()->create([
@@ -48,7 +45,7 @@ class UserController extends ApiController
         $token = JWTAuth::fromUser($user);
         return $this->responseSuccessWithExtrasAndMessage([
             'token'    => $token,
-            'expireAt' => JWTAuth::getPayload($token)->get('exp')
+            'expireAt' => Carbon::now()->timestamp + config('jwt.refresh_ttl') * 60
         ]);
     }
 
@@ -62,6 +59,10 @@ class UserController extends ApiController
         ]);
 
         $user = JWTAuth::parseToken()->authenticate();
+        if ($request->has('nickname')) {
+            $user->name = $request->nickname;
+            $user->save();
+        }
         $user->wx_user()->update($request->only([
             'nickname',
             'gender',

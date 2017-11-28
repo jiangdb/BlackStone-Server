@@ -37,6 +37,10 @@
                         <input class="form-control" name="version_code" type="text" id="version_code" value="{{ $firmware->version_code }}" required>
                     </div>
                     <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea class="form-control" name="description" rows="5" required>{{ $firmware->description }}</textarea>
+                    </div>
+                    <div class="form-group">
                         <label for="firmware">Select Firmware</label>
                         <input class="form-control" name="firmware" type="file">
                     </div>

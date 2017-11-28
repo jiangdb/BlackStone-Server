@@ -41,6 +41,7 @@ class FirmwareController extends Controller
         $validatedData = $request->validate([
             'model_number' => 'required|string|max:255',
             'version' => 'required|string|size:7',
+            'description' => 'required',
             'firmware' => 'required|file|mimes:bin',
         ]);
 
@@ -93,6 +94,7 @@ class FirmwareController extends Controller
             'model_number' => 'required|string|max:255',
             'version' => 'required|string|size:7',
             'version_code' => 'required|integer',
+            'description' => 'required',
         ]);
 
         if ($request->has('firmware')) {

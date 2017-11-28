@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\User;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
@@ -33,5 +34,18 @@ class TokenController extends ApiController
             'token'    => $newToken,
             'expireAt' => JWTAuth::getPayload($newToken)->get('exp')
         ]);
+    }
+
+    public function get() {
+        $user = User::find(3);
+        $token = JWTAuth::fromUser($user);
+        return $this->responseSuccessWithExtrasAndMessage([
+            'token'    => $token,
+            'expireAt' => JWTAuth::getPayload($token)->get('exp')
+        ]);
+    }
+
+    public function test() {
+        return $this->responseSuccess();
     }
 }

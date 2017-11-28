@@ -18,11 +18,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'as' => 'admin.', 'namespace' => 'Admin'], function(){
-    Route::get('/', function () {
-        return view('admin.dashboard');
-    })->name('dashboard');
-
+    Route::get('/', 'DashboardController@index')->name('dashboard');
     Route::get('firmware/{firmware}/download', 'FirmwareController@download')->name('firmware.download');
     Route::resource('firmware', 'FirmwareController');
+    Route::get('devices/list', 'DeviceController@getDevices')->name('devices.list');
     Route::resource('devices', 'DeviceController');
 });

@@ -32,6 +32,10 @@
                         <input class="form-control" name="version" type="text" id="version" required>
                     </div>
                     <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea class="form-control" name="description" rows="5" required></textarea>
+                    </div>
+                    <div class="form-group">
                         <label for="firmware">Select Firmware</label>
                         <input class="form-control" name="firmware" type="file" required>
                     </div>

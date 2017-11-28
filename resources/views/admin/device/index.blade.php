@@ -30,25 +30,15 @@
                 <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-firmware">
                     <thead>
                     <tr>
-                        <th class="col-md-1">#</th>
+                        <th class="col-md-1">ID</th>
                         <th>Model</th>
                         <th>Serial</th>
                         <th>Version</th>
                         <th>IP</th>
-                        <th class="no-sort">Upload At</th>
+                        <th>Upload At</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach( $devices as $device)
-                    <tr class="odd gradeX">
-                        <td>{{ $device->id }}</td>
-                        <td>{{ $device->model_number }}</td>
-                        <td>{{ $device->serial_number }}</td>
-                        <td>{{ $device->fw_version }}</td>
-                        <td>{{ $device->ip_address }}</td>
-                        <td>{{ $device->created_at }}</td>
-                    </tr>
-                    @endforeach
                     </tbody>
                 </table>
                 <!-- /.table-responsive -->
@@ -71,9 +61,20 @@
     <script>
         $(document).ready(function() {
             $('#dataTables-firmware').DataTable({
+                "order": [[ 5, "desc" ]],
                 responsive: true,
                 "columnDefs": [
                     { "orderable": false, "targets": 'no-sort' }
+                ],
+                "serverSide": true,
+                ajax:'{{ route('admin.devices.list') }}',
+                "columns": [
+                    { "name":"id", "data": "id" },
+                    { "name":"model", "data": "model" },
+                    { "name":"serial", "data": "serial" },
+                    { "name":"version", "data": "version" },
+                    { "name":"ip", "data": "ip" },
+                    { "name":"created_at", "data": "created_at" },
                 ]
             });
         });
