@@ -21,6 +21,9 @@
             <li>
                 <a href="{{ route('admin.devices.index') }}"><i class="fa fa-mobile fa-fw"></i> Devices</a>
             </li>
+            <li>
+                <a href="{{ route('admin.user.index') }}"><i class="fa fa-users fa-fw"></i> Users</a>
+            </li>
         </ul>
     </div>
     <!-- /.sidebar-collapse -->

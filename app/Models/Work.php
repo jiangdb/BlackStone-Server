@@ -14,7 +14,7 @@ class Work extends Model
      */
     protected $fillable = [
         'device_id', 'bean_category', 'bean_weight', 'water_ratio', 'water_weight', 'work_time', 'rating', 'flavor',
-        'feeling','thumbnail','views','likes','unlikes','started_at'
+        'feeling','thumbnail','views','likes','unlikes','data','started_at'
     ];
 
     /**
@@ -43,13 +43,4 @@ class Work extends Model
     public function device() {
         return $this->belongsTo(Device::class);
     }
-
-    /**
-     * work has many procedures
-     * @return \Illuminate\Database\Eloquent\Relations\hasMany
-     */
-    public function procedures() {
-        return $this->hasMany(WorkProcedure::class);
-    }
-
 }

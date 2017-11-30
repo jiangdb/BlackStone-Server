@@ -11,13 +11,21 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    const PLATFORM_WEIXIN = 'wx_user';
+
+    static public $support_platforms = [
+        self::PLATFORM_WEIXIN => 'Wei Xin',
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'password',
     ];
 
     /**
@@ -26,7 +34,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
     /**
@@ -46,8 +55,23 @@ class User extends Authenticatable
      * One user has many works
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function works() {
+    public function works()
+    {
         return $this->hasMany(Work::class);
+    }
+
+    /**
+     * Accessors functions
+     */
+    public function getDisplayPlatformsAttribute($value)
+    {
+        $platforms = collect(explode(';', $this->platforms));
+        $display = $platforms->map(function($item, $key){
+            if ($item) {
+                return self::$support_platforms[$item];
+            }
+        });
+        return $display->implode(',');
     }
 
 }

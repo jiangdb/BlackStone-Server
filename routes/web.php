@@ -27,4 +27,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'as' => 'admin.', 'na
     Route::resource('firmware', 'FirmwareController');
     Route::get('devices/list', 'DeviceController@getDevices')->name('devices.list');
     Route::resource('devices', 'DeviceController');
+    Route::get('user/list', 'UserController@getUsers')->name('user.list');
+    Route::resource('user', 'UserController');
 });
