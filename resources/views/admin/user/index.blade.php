@@ -74,6 +74,7 @@
                     { "name":"platforms", "data": "platforms" },
                     { "name":"updated_at", "data": "updated_at" },
                     { "name":"created_at", "data": "created_at" },
+                    { "name":"actions", "data": "actions" },
                 ]
             });
         });

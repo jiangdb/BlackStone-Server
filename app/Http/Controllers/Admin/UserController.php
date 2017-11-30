@@ -51,6 +51,10 @@ class UserController extends Controller
                 'platforms' => $user->display_platforms,
                 'created_at'=> $user->created_at->toDateTimeString(),
                 'updated_at'=> $user->updated_at->toDateTimeString(),
+                'actions'   => '
+                    <a class="btn btn-small btn-success hoffset1" href="'.route('admin.user.show', $user->id).'">
+                        <i class="fa fa-info fa-fw" aria-hidden="true"></i>
+                    </a>'
             ];
         }
         $result = [
@@ -61,5 +65,17 @@ class UserController extends Controller
         ];
         return response()->json($result);
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
 
 }

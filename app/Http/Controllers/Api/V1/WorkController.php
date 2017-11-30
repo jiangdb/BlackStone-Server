@@ -32,8 +32,8 @@ class WorkController extends ApiController
             'rating'        => 'required|numeric',
             'flavor'        => 'nullable',
             'feeling'       => 'nullable',
+            'data'          => 'required',
             'started_at'    => 'required',
-            'buildData'     => 'required|array',
         ]);
 
         $user = JWTAuth::parseToken()->authenticate();
@@ -42,17 +42,6 @@ class WorkController extends ApiController
         if ($device) {
             $work->device()->associate($device);
             $work->save();
-        }
-
-        $times = $request->buildData['times'];
-        $weight_extracts = $request->buildData['weight_extracts'];
-        $weight_waters = $request->buildData['weight_waters'];
-        foreach ($times as $index=>$time) {
-            $work->procedures()->create([
-                'time_in_ms' => $time,
-                'extract_weight' => $weight_extracts[$index],
-                'water_weight' => $weight_waters[$index],
-            ]);
         }
 
         return $this->responseSuccess();

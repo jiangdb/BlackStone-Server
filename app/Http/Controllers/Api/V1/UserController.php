@@ -54,7 +54,7 @@ class UserController extends ApiController
         $this->validate($request, [
             'user_type' => [
                 'required',
-                Rule::in(['weixin']),
+                Rule::in( array_keys(User::$support_platforms) ),
             ],
         ]);
 
@@ -63,7 +63,9 @@ class UserController extends ApiController
             $user->name = $request->nickname;
             $user->save();
         }
-        $user->wx_user()->update($request->only([
+
+        $user_type = $request->user_type;
+        $user->$user_type()->update($request->only([
             'nickname',
             'gender',
             'city',
