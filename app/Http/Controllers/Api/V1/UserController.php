@@ -34,7 +34,8 @@ class UserController extends ApiController
             $user = User::create([
                 'name'     => 'auto',
                 'email'    => $res->openid.'@bm.com',
-                'password' => Hash::make(str_random(16))
+                'password' => Hash::make(str_random(16)),
+                'platforms'=> 'wx_user'
             ]);
             $user->wx_user()->create([
                 'open_id' => $res->openid,

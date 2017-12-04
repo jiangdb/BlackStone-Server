@@ -26,6 +26,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'platforms',
     ];
 
     /**
@@ -82,6 +83,14 @@ class User extends Authenticatable
     {
         $platforms = collect(explode(';', $this->platforms));
         return $platforms->contains($platform);
+    }
+
+    public function addPlatform($platform)
+    {
+        if (!$this->hasPlatform($platform)) {
+            $this->platforms.=';'.$platform;
+            $this->save();
+        }
     }
 
 }
