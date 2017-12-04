@@ -59,7 +59,7 @@ class UserController extends ApiController
         ]);
 
         $user = JWTAuth::parseToken()->authenticate();
-        if ($request->has('nickname')) {
+        if ($request->has('nickname') && ($request->nickname != $user->name)) {
             $user->name = $request->nickname;
             $user->save();
         }

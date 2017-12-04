@@ -77,7 +77,7 @@
                             </div>
                         </div>
                     </div>
-                    <a href="#">
+                    <a href="{{ route('admin.user.index') }}">
                         <div class="panel-footer">
                             <span class="pull-left">View Details</span>
                             <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -94,8 +94,8 @@
                                 <i class="fa fa-support fa-5x"></i>
                             </div>
                             <div class="col-xs-9 text-right">
-                                <div class="huge">13</div>
-                                <div>Support Tickets!</div>
+                                <div class="huge">{{ $works }}</div>
+                                <div>Total Cups!</div>
                             </div>
                         </div>
                     </div>
@@ -114,26 +114,7 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <i class="fa fa-bar-chart-o fa-fw"></i> Area Chart Example
-                        <div class="pull-right">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                    Actions
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu pull-right" role="menu">
-                                    <li><a href="#">Action</a>
-                                    </li>
-                                    <li><a href="#">Another action</a>
-                                    </li>
-                                    <li><a href="#">Something else here</a>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">Separated link</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                        <i class="fa fa-bar-chart-o fa-fw"></i>
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
@@ -157,5 +138,26 @@
 <!-- Morris Charts JavaScript -->
 <script src="/vendor/raphael/raphael.min.js"></script>
 <script src="/vendor/morrisjs/morris.min.js"></script>
-<script src="/data/morris-data.js"></script>
+<script>
+$(function() {
+    Morris.Area({
+        element: 'morris-area-chart',
+        data: [
+            @foreach( $counts_perday as $date=>$count)
+            {
+                date: '{{$date}}',
+                user: '{{$count['user']}}',
+                cup: '{{$count['work']}}'
+            },
+            @endforeach
+        ],
+        xkey: 'date',
+        ykeys: ['user', 'cup'],
+        labels: ['user', 'cup'],
+        pointSize: 2,
+        hideHover: 'auto',
+        resize: true
+    });
+});
+</script>
 @endpush

@@ -37,9 +37,7 @@ class UserController extends Controller
             ->when($search, function ($query) use ($search) {
                 return $query->where('id', 'like', '%'.$search['value'].'%')
                     ->orWhere('name', 'like', '%'.$search['value'].'%')
-                    ->orWhere('platforms', 'like', '%'.$search['value'].'%')
-                    ->orWhere('updated_at', 'like', '%'.$search['value'].'%')
-                    ->orWhere('created_at', 'like', '%'.$search['value'].'%');
+                    ->orWhere('platforms', 'like', '%'.$search['value'].'%');
             })
             ->get();
 
@@ -48,7 +46,7 @@ class UserController extends Controller
             $data[] = [
                 'id'        => $user->id,
                 'name'      => $user->name,
-                'platforms' => $user->display_platforms,
+                'platforms' => $user->hasPlatform(User::PLATFORM_WEIXIN)?'<img class="user-platforms" src="/images/weixin.png">':'',
                 'created_at'=> $user->created_at->toDateTimeString(),
                 'updated_at'=> $user->updated_at->toDateTimeString(),
                 'actions'   => '
@@ -74,7 +72,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::with('wx_user')->findOrFail($id);
+        return view('admin.user.show', compact('user'));
     }
 
 

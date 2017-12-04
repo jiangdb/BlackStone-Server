@@ -9,3 +9,20 @@
 .hoffset8 { margin-left: 100px; }
 .hoffset9 { margin-left: 150px; }
 
+.user-platforms {
+    width: 30px;
+    height:30px;
+}
+
+.table-user-information > tbody > tr {
+    border-top: 1px solid rgb(221, 221, 221);
+}
+
+.table-user-information > tbody > tr:first-child {
+    border-top: 0;
+}
+
+
+.table-user-information > tbody > tr > td {
+    border-top: 0;
+}

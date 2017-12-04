@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class WxUser extends Model
 {
     /**
+     * All of the relationships to be touched.
+     *
+     * @var array
+     */
+    protected $touches = ['user'];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

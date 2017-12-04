@@ -74,4 +74,14 @@ class User extends Authenticatable
         return $display->implode(',');
     }
 
+
+    /**
+     * Other public functions
+     */
+    public function hasPlatform($platform)
+    {
+        $platforms = collect(explode(';', $this->platforms));
+        return $platforms->contains($platform);
+    }
+
 }

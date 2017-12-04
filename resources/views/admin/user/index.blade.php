@@ -61,7 +61,7 @@
     <script>
         $(document).ready(function() {
             $('#dataTables-user').DataTable({
-                "order": [[ 0, "desc" ]],
+                "order": [[ 3, "desc" ]],
                 responsive: true,
                 "columnDefs": [
                     { "orderable": false, "targets": 'no-sort' }
