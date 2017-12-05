@@ -39,6 +39,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api\V1', 'as' => 'api.v1.'], fun
 
     Route::group(['prefix' => 'work', 'middleware' => ['jwt.refresh','jwt.auth'], 'as' => 'work.'], function() {
         Route::get('/', 'WorkController@index')->name('index');
+        Route::get('/{id}', 'WorkController@show')->name('show');
         Route::post('/', 'WorkController@store')->name('store');
     });
     /*

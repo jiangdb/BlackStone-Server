@@ -14,8 +14,28 @@ class WorkController extends ApiController
 
     public function index(Request $request)
     {
-        $works = Work::orderBy('created_at','desc')->select('id','bean_category','started_at')->paginate(20);
+        $user = JWTAuth::parseToken()->authenticate();
+        $works = $user->works()->orderBy('created_at','desc')->select('id','bean_category','started_at')->paginate(20);
         return $this->responseSuccessWithExtrasAndMessage($works->toArray());
+    }
+
+    public function show($id)
+    {
+        $work = Work::find($id);
+        if (!$work) {
+            return $this->responseNotFoundWithMessage();
+        }
+
+        return $this->responseSuccessWithExtrasAndMessage([
+           'rate'   => $work->rating,
+           'flavor' => $work->flavor,
+           'feeling' => $work->feeling,
+           'bean'   => $work->bean_category,
+           'bean_weight'   => $work->bean_weight,
+           'water_ratio'   => $work->water_ratio,
+           'water_weight'   => $work->water_weight,
+           'data' => $work->data
+        ]);
     }
 
     public function store(Request $request)
@@ -44,7 +64,9 @@ class WorkController extends ApiController
             $work->save();
         }
 
-        return $this->responseSuccess();
+        return $this->responseSuccessWithExtrasAndMessage([
+            'id' => $work->id,
+        ]);
     }
 
 }
