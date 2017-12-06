@@ -66,14 +66,13 @@ class UserController extends ApiController
         }
 
         $user_type = $request->user_type;
-        $user->$user_type()->update($request->only([
-            'nickname',
-            'gender',
-            'city',
-            'province',
-            'country',
-            'avatar_url',
-        ]));
+        $user_platform = $user->$user_type;
+        $user_platform->nickname = $request->nickname;
+        $user_platform->gender = $request->gender;
+        $user_platform->city = $request->city;
+        $user_platform->province = $request->province;
+        $user_platform->avatar_url = $request->avatar_url;
+        $user_platform->save();
 
         return $this->responseSuccess();
     }

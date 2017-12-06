@@ -7,6 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class WxUser extends Model
 {
+
+    /**
+     * The primary key for the model.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'user_id';
+
     /**
      * All of the relationships to be touched.
      *
