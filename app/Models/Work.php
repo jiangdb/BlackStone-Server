@@ -13,7 +13,7 @@ class Work extends Model
      * @var array
      */
     protected $fillable = [
-        'device_id', 'bean_category', 'bean_weight', 'water_ratio', 'water_weight', 'work_time', 'rating', 'flavor',
+        'device_id', 'bean_category', 'bean_weight', 'water_ratio', 'water_weight', 'temperature', 'work_time', 'rating', 'flavor',
         'feeling','thumbnail','views','likes','unlikes','data','started_at'
     ];
 

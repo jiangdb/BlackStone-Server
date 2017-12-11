@@ -33,7 +33,8 @@ class WorkController extends ApiController
            'bean'   => $work->bean_category,
            'bean_weight'   => $work->bean_weight,
            'water_ratio'   => $work->water_ratio,
-           'water_weight'   => $work->water_weight,
+           'water_weight'  => $work->water_weight,
+           'temperature'   => $work->temperature,
            'data' => $work->data
         ]);
     }
@@ -48,6 +49,7 @@ class WorkController extends ApiController
             'bean_weight'   => 'required',
             'water_ratio'   => 'required',
             'water_weight'  => 'required',
+            'temperature'   => 'required',
             'work_time'     => 'required|numeric',
             'rating'        => 'required|numeric',
             'flavor'        => 'nullable',
