@@ -28,33 +28,21 @@ class DeviceController extends ApiController
     {
         $this->validate($request, [
             'model_number'  => 'required|max:255',
-            'serial_number' => 'required|string|size:12',
+            'serial_number' => 'required|unique:devices|string|size:12',
             'fw_version'    => 'required|string|size:7',
             'ip_address'    => 'nullable|ip',
             'latitude'      => 'nullable|numeric|min:-90|max:90',
             'longitude'     => 'nullable|numeric|min:-180|max:180',
         ]);
 
-        $device = Device::where('serial_number', $request->serial_number)->first();
-        if ($device) {
-            $device->update($request->only([
-                'model_number',
-                'serial_number',
-                'fw_version',
-                'ip_address',
-                'latitude',
-                'longitude'
-            ]));
-        }else {
-            Device::create($request->only([
-                'model_number',
-                'serial_number',
-                'fw_version',
-                'ip_address',
-                'latitude',
-                'longitude'
-            ]));
-        }
+        Device::create($request->only([
+            'model_number',
+            'serial_number',
+            'fw_version',
+            'ip_address',
+            'latitude',
+            'longitude'
+        ]));
 
         $count = Device::whereDate('created_at', Carbon::today())->count();
         return $this->responseSuccessWithExtrasAndMessage(['total' => $count]);
