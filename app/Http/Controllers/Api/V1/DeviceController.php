@@ -57,19 +57,19 @@ class DeviceController extends ApiController
             'ip_address'    => 'nullable',
         ]);
 
-        $device = Device::where('model_number', $request->model_number)
-            ->where('serial_number', $request->serial_number)->first();
+        $device = Device::where('serial_number', $request->serial_number)->first();
         if ($device == NULL) {
             return $this->responseNotFoundWithMessage();
         }
 
-        if ($device->fw_version != $request->fw_version) {
-            $device->fw_version = $request->fw_version;
+        $device->model_number = $request->model_number;
+        $device->fw_version = $request->fw_version;
+        $device->ip_address = $request->ip_address??$device->ip_address;
+        if ($device->isDirty()) {
+            $device->save();
+        }else{
+            $device->touch();
         }
-        if ($device->ip_address != $request->ip_address) {
-            $device->ip_address = $request->ip_address;
-        }
-        $device->save();
         return $this->responseSuccess();
     }
 

@@ -72,8 +72,11 @@ class UserController extends ApiController
         $user_platform->city = $request->city;
         $user_platform->province = $request->province;
         $user_platform->avatar_url = $request->avatar_url;
-        $user_platform->save();
-
+        if ($user_platform->isDirty()) {
+            $user_platform->save();
+        }else{
+            $user_platform->touch();
+        }
         return $this->responseSuccess();
     }
 
