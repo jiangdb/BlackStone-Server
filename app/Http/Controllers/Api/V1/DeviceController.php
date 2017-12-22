@@ -86,6 +86,7 @@ class DeviceController extends ApiController
         }
 
         return $this->responseSuccessWithExtrasAndMessage([
+            'id' => $firmware->id,
             'version' => $firmware->version,
             'download_url' => route('api.v1.device.ota.download', $firmware->id),
             'description' => $firmware->description,
