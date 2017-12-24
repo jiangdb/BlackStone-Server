@@ -61,20 +61,21 @@
     <script>
         $(document).ready(function() {
             $('#dataTables-firmware').DataTable({
-                "order": [[ 5, "desc" ]],
+                stateSave: true,
                 responsive: true,
+                "serverSide": true,
+                "order": [[ 5, "desc" ]],
                 "columnDefs": [
                     { "orderable": false, "targets": 'no-sort' }
                 ],
-                "serverSide": true,
                 ajax:'{{ route('admin.devices.list') }}',
                 "columns": [
                     { "name":"id", "data": "id" },
-                    { "name":"model", "data": "model" },
-                    { "name":"serial", "data": "serial" },
-                    { "name":"version", "data": "version" },
-                    { "name":"ip", "data": "ip" },
-                    { "name":"created_at", "data": "created_at" },
+                    { "name":"model", "data": "model_number" },
+                    { "name":"serial", "data": "serial_number" },
+                    { "name":"version", "data": "fw_version" },
+                    { "name":"ip", "data": "ip_address" },
+                    { "name":"updated_at", "data": "updated_at" },
                 ]
             });
         });

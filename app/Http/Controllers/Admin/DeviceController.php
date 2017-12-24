@@ -29,28 +29,37 @@ class DeviceController extends Controller
         $columns = $request->input('columns');
         $search = $request->input('search');
 
+        $columnsMap = [
+            'id'        => 'id',
+            'model'     => 'model_number',
+            'serail'    => 'serail_number',
+            'version'   => 'fw_version',
+            'ip'        => 'ip_address',
+            'updated_at' => 'updated_at'
+        ];
+
         $devices = Device::offset($start)->limit($length)
-            ->when($order, function ($query) use ($order, $columns) {
-                return $query->orderBy($columns[$order[0]['column']]['name'], $order[0]['dir']);
+            ->when($order, function ($query) use ($order, $columns, $columnsMap) {
+                return $query->orderBy($columns[$order[0]['column']]['data'], $order[0]['dir']);
             })
-            ->when($search, function ($query) use ($search) {
+            ->when($search['value'], function ($query) use ($search) {
                 return $query->where('model_number', 'like', '%'.$search['value'].'%')
                     ->orWhere('serial_number', 'like', '%'.$search['value'].'%')
                     ->orWhere('fw_version', 'like', '%'.$search['value'].'%')
                     ->orWhere('ip_address', 'like', '%'.$search['value'].'%')
-                    ->orWhere('created_at', 'like', '%'.$search['value'].'%');
+                    ->orWhere('updated_at', 'like', '%'.$search['value'].'%');
             })
             ->get();
 
         $data = [];
         foreach ($devices as $device) {
             $data[] = [
-                'id'        => $device->id,
-                'model'     => $device->model_number,
-                'serial'    => $device->serial_number,
-                'version'   => $device->fw_version,
-                'ip'        => $device->ip_address,
-                'created_at'=> $device->created_at->toDateTimeString(),
+                'id'            => $device->id,
+                'model_number'  => $device->model_number,
+                'serial_number' => $device->serial_number,
+                'fw_version'    => $device->fw_version,
+                'ip_address'    => $device->ip_address,
+                'updated_at'    => $device->updated_at->toDateTimeString(),
             ];
         }
         $result = [

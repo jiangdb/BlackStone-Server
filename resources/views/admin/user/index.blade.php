@@ -30,11 +30,11 @@
                 <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-user">
                     <thead>
                     <tr>
-                        <th class="col-md-1">ID</th>
-                        <th>name</th>
-                        <th>platform</th>
-                        <th>Last time online </th>
-                        <th>Register At</th>
+                        <th class="col-md-1 no-sort">Avatar</th>
+                        <th class="text-center">Name</th>
+                        <th class="text-center">Platform</th>
+                        <th class="text-center">Last time online </th>
+                        <th class="text-center">Register At</th>
                         <th class="col-lg-2 no-sort">Actions</th>
                     </tr>
                     </thead>
@@ -61,15 +61,17 @@
     <script>
         $(document).ready(function() {
             $('#dataTables-user').DataTable({
-                "order": [[ 3, "desc" ]],
+                stateSave: true,
                 responsive: true,
-                "columnDefs": [
-                    { "orderable": false, "targets": 'no-sort' }
-                ],
                 "serverSide": true,
+                "order": [[ 3, "desc" ]],
+                "columnDefs": [
+                    { "orderable": false, "targets": 'no-sort' },
+                    { className: "text-right", "targets": 'text-center' }
+                ],
                 ajax:'{{ route('admin.user.list') }}',
                 "columns": [
-                    { "name":"id", "data": "id" },
+                    { "name":"avatar", "data": "avatar" },
                     { "name":"name", "data": "name" },
                     { "name":"platforms", "data": "platforms" },
                     { "name":"updated_at", "data": "updated_at" },
