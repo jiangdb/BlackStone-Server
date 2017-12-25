@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Jobs\QueryLocation;
 use App\Models\Device;
 use App\Models\Firmware;
 use Carbon\Carbon;
@@ -62,6 +63,9 @@ class DeviceController extends ApiController
             return $this->responseNotFoundWithMessage();
         }
 
+        if ($request->ip_address && $request->ip_address != $device->ip_address)  {
+            QueryLocation::dispatch($device);
+        }
         $device->model_number = $request->model_number;
         $device->fw_version = $request->fw_version;
         $device->ip_address = $request->ip_address??$device->ip_address;

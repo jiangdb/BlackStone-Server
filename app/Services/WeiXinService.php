@@ -23,22 +23,6 @@ class WeiXinService
         $this->client = new Client();
     }
 
-    function test()
-    {
-        try {
-            $client = new Client();
-            $res = $client->request('GET', 'http://bs.com/api/test');
-            return json_decode($res->getBody()->getContents());
-        }catch(RequestException $e) {
-            Log::error($this->tag.'RequestException');
-            if ($e->hasResponse()) {
-                Log::error($this->tag.Psr7\str($e->getResponse()));
-                Log::error($this->tag. "\n" . $e->getTraceAsString());
-            }
-            return null;
-        }
-    }
-
     function code2session($code)
     {
         //https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code

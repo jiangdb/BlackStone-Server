@@ -29,17 +29,8 @@ class DeviceController extends Controller
         $columns = $request->input('columns');
         $search = $request->input('search');
 
-        $columnsMap = [
-            'id'        => 'id',
-            'model'     => 'model_number',
-            'serail'    => 'serail_number',
-            'version'   => 'fw_version',
-            'ip'        => 'ip_address',
-            'updated_at' => 'updated_at'
-        ];
-
         $devices = Device::offset($start)->limit($length)
-            ->when($order, function ($query) use ($order, $columns, $columnsMap) {
+            ->when($order, function ($query) use ($order, $columns) {
                 return $query->orderBy($columns[$order[0]['column']]['data'], $order[0]['dir']);
             })
             ->when($search['value'], function ($query) use ($search) {
@@ -59,6 +50,7 @@ class DeviceController extends Controller
                 'serial_number' => $device->serial_number,
                 'fw_version'    => $device->fw_version,
                 'ip_address'    => $device->ip_address,
+                'city'          => $device->city,
                 'updated_at'    => $device->updated_at->toDateTimeString(),
             ];
         }
