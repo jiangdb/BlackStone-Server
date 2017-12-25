@@ -41,7 +41,7 @@ class WorkController extends ApiController
 
     public function store(Request $request)
     {
-        Log::info($this->tag.print_r($request->all(),true));
+        Log::debug($this->tag.print_r($request->all(),true));
 
         $this->validate($request, [
             'device'        => 'required',
