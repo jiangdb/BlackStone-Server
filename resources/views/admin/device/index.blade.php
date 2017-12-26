@@ -34,7 +34,6 @@
                         <th>Model</th>
                         <th>Serial</th>
                         <th>Version</th>
-                        <th>IP</th>
                         <th>City</th>
                         <th>Upload At</th>
                     </tr>
@@ -75,7 +74,6 @@
                     { "name":"model", "data": "model_number" },
                     { "name":"serial", "data": "serial_number" },
                     { "name":"version", "data": "fw_version" },
-                    { "name":"ip", "data": "ip_address" },
                     { "name":"city", "data": "city" },
                     { "name":"updated_at", "data": "updated_at" },
                 ]

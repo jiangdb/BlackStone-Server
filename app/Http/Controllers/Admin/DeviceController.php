@@ -37,7 +37,7 @@ class DeviceController extends Controller
                 return $query->where('model_number', 'like', '%'.$search['value'].'%')
                     ->orWhere('serial_number', 'like', '%'.$search['value'].'%')
                     ->orWhere('fw_version', 'like', '%'.$search['value'].'%')
-                    ->orWhere('ip_address', 'like', '%'.$search['value'].'%')
+                    ->orWhere('city', 'like', '%'.$search['value'].'%')
                     ->orWhere('updated_at', 'like', '%'.$search['value'].'%');
             })
             ->get();
@@ -49,7 +49,6 @@ class DeviceController extends Controller
                 'model_number'  => $device->model_number,
                 'serial_number' => $device->serial_number,
                 'fw_version'    => $device->fw_version,
-                'ip_address'    => $device->ip_address,
                 'city'          => $device->city,
                 'updated_at'    => $device->updated_at->toDateTimeString(),
             ];
