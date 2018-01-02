@@ -35,7 +35,8 @@
                         <th>Serial</th>
                         <th>Version</th>
                         <th>City</th>
-                        <th>Upload At</th>
+                        <th>最后上线</th>
+                        <th>生产日期</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -76,6 +77,7 @@
                     { "name":"version", "data": "fw_version" },
                     { "name":"city", "data": "city" },
                     { "name":"updated_at", "data": "updated_at" },
+                    { "name":"created_at", "data": "created_at" },
                 ]
             });
         });

@@ -38,7 +38,8 @@ class DeviceController extends Controller
                     ->orWhere('serial_number', 'like', '%'.$search['value'].'%')
                     ->orWhere('fw_version', 'like', '%'.$search['value'].'%')
                     ->orWhere('city', 'like', '%'.$search['value'].'%')
-                    ->orWhere('updated_at', 'like', '%'.$search['value'].'%');
+                    ->orWhere('updated_at', 'like', '%'.$search['value'].'%')
+                    ->orWhere('created_at', 'like', '%'.$search['value'].'%');
             })
             ->get();
 
@@ -51,6 +52,7 @@ class DeviceController extends Controller
                 'fw_version'    => $device->fw_version,
                 'city'          => $device->city,
                 'updated_at'    => $device->updated_at->toDateTimeString(),
+                'created_at'    => $device->created_at->toDateTimeString(),
             ];
         }
         $result = [
