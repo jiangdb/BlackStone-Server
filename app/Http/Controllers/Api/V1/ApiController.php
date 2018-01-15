@@ -6,6 +6,7 @@ use App\Exceptions\TestException;
 use App\Http\Controllers\Controller;
 use App\Exceptions\ApiValidationFailedException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 
@@ -24,6 +25,8 @@ abstract class ApiController extends Controller
         $validator = Validator::make($request->all(), $rules, $messages, $customAttributes);
 
         if ($validator->fails()) {
+            Log::error('Validation fails: '. $validator->errors());
+            Log::error('request: '. print_r($request->all(), true));
             throw new ApiValidationFailedException($validator);
         }
     }
