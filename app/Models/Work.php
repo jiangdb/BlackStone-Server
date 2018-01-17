@@ -4,9 +4,12 @@ namespace App\Models;
 
 use App\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Work extends Model
 {
+    use SoftDeletes;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -22,7 +25,7 @@ class Work extends Model
      *
      * @var array
      */
-    protected $dates = ['started_at'];
+    protected $dates = ['started_at','deleted_at'];
 
     /**
      * Relationships

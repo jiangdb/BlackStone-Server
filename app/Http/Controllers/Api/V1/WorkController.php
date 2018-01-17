@@ -43,8 +43,6 @@ class WorkController extends ApiController
 
     public function store(Request $request)
     {
-        Log::debug($this->tag.print_r($request->all(),true));
-
         $this->validate($request, [
             'device'        => 'required',
             'bean_category' => 'required',
@@ -74,4 +72,15 @@ class WorkController extends ApiController
         ]);
     }
 
+    public function destroy($id)
+    {
+        $work = Work::find($id);
+        if (!$work) {
+            return $this->responseNotFoundWithMessage();
+        }
+        // delete
+        $work->delete();
+
+        return $this->responseSuccess();
+    }
 }

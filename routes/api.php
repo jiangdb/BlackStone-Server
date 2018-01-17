@@ -41,6 +41,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api\V1', 'as' => 'api.v1.'], fun
         Route::get('/', 'WorkController@index')->name('index');
         Route::get('/{id}', 'WorkController@show')->name('show');
         Route::post('/', 'WorkController@store')->name('store');
+        Route::delete('/{id}', 'WorkController@destroy')->name('delete');
     });
     /*
     Route::get('/work', 'WorkController@work');
