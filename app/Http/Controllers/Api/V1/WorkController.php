@@ -27,17 +27,18 @@ class WorkController extends ApiController
         }
 
         return $this->responseSuccessWithExtrasAndMessage([
-           'rate'   => $work->rating,
-           'flavor' => $work->flavor,
-           'feeling' => $work->feeling,
-           'bean'   => $work->bean_category,
+           'rate'          => $work->rating,
+           'flavor'        => $work->flavor,
+           'accessories'   => $work->accessories,
+           'feeling'       => $work->feeling,
+           'bean'          => $work->bean_category,
            'bean_weight'   => $work->bean_weight,
            'water_ratio'   => $work->water_ratio,
            'water_weight'  => $work->water_weight,
            'grand_size'    => $work->grand_size,
            'temperature'   => $work->temperature,
            'work_time'     => $work->work_time,
-           'data' => $work->data
+           'data'          => $work->data
         ]);
     }
 
@@ -54,13 +55,28 @@ class WorkController extends ApiController
             'work_time'     => 'required|numeric',
             'rating'        => 'required|numeric',
             'flavor'        => 'nullable',
+            'accessories'   => 'nullable',
             'feeling'       => 'nullable',
             'data'          => 'required',
             'started_at'    => 'required',
         ]);
 
         $user = JWTAuth::parseToken()->authenticate();
-        $work = $user->works()->create($request->all());
+        $work = $user->works()->create($request->only([
+            'bean_category',
+            'bean_weight',
+            'water_ratio',
+            'water_weight',
+            'grand_size',
+            'temperature',
+            'work_time',
+            'rating',
+            'flavor',
+            'accessories',
+            'feeling',
+            'data',
+            'started_at',
+        ]));
         $device = Device::where('serial_number', $request->device)->first();
         if ($device) {
             $work->device()->associate($device);

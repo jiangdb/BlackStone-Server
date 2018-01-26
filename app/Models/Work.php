@@ -17,7 +17,8 @@ class Work extends Model
      */
     protected $fillable = [
         'device_id', 'bean_category', 'bean_weight', 'water_ratio', 'water_weight', 'grand_size', 'temperature',
-        'work_time', 'rating', 'flavor', 'feeling','thumbnail','views','likes','unlikes','data','started_at'
+        'work_time', 'rating', 'flavor', 'accessories', 'feeling','thumbnail','views','likes','unlikes','data',
+        'started_at'
     ];
 
     /**
