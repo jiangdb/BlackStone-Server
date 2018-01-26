@@ -45,7 +45,7 @@ class WorkController extends ApiController
     public function store(Request $request)
     {
         $this->validate($request, [
-            'device'        => 'required',
+            'device'        => 'nullable',
             'bean_category' => 'required',
             'bean_weight'   => 'required',
             'water_ratio'   => 'required',
