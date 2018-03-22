@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Challenge;
 use App\Models\Work;
 use App\Models\WxUser;
 use Illuminate\Notifications\Notifiable;
@@ -59,6 +60,15 @@ class User extends Authenticatable
     public function works()
     {
         return $this->hasMany(Work::class);
+    }
+
+    /**
+     * One user has many practice
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function challenges()
+    {
+        return $this->hasMany(Challenge::class);
     }
 
     /**

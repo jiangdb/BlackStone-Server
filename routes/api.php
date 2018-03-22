@@ -43,6 +43,12 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api\V1', 'as' => 'api.v1.'], fun
         Route::post('/', 'WorkController@store')->name('store');
         Route::delete('/{id}', 'WorkController@destroy')->name('delete');
     });
+
+    Route::group(['prefix' => 'challenge', 'middleware' => ['jwt.refresh','jwt.auth'], 'as' => 'challenge.'], function() {
+        Route::get('/leaderboard', 'ChallengeController@leaderBoard')->name('leaderboard');
+        Route::post('/', 'ChallengeController@store')->name('store');
+    });
+
     /*
     Route::get('/work', 'WorkController@work');
     Route::get('/work/{id}', 'WorkController@showWork');
