@@ -19,7 +19,14 @@ class ChallengeController extends ApiController
     {
         $challenges = Challenge::with(['user','user.wx_user'])->orderBy('score','desc')->paginate(5);
 
-        return new ChallengeCollection($challenges);
+        $user = JWTAuth::parseToken()->authenticate();
+        $bestChallenge = $user->challenges()->orderBy('score', 'desc')->first();
+        $userBest = [];
+        if ($bestChallenge) {
+            $userBest['rank'] = $bestChallenge->rank;
+            $userBest['score'] = $bestChallenge->score;
+        }
+        return (new ChallengeCollection($challenges))->additional(['userBest' => $userBest]);
     }
 
     /**
