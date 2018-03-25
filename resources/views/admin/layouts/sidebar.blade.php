@@ -22,6 +22,9 @@
                 <a href="{{ route('admin.devices.index') }}"><i class="fa fa-mobile fa-fw"></i> Devices</a>
             </li>
             <li>
+                <a href="{{ route('admin.challenge.index') }}"><i class="fa fa-train fa-fw"></i> 挑战赛</a>
+            </li>
+            <li>
                 <a href="{{ route('admin.user.index') }}"><i class="fa fa-users fa-fw"></i> Users</a>
             </li>
         </ul>

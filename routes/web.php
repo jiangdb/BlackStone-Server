@@ -29,4 +29,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'as' => 'admin.', 'na
     Route::resource('devices', 'DeviceController');
     Route::get('user/list', 'UserController@getUsers')->name('user.list');
     Route::resource('user', 'UserController');
+    Route::get('challenge', 'ChallengeController@index')->name('challenge.index');
+    Route::get('challenge/ajax/leaderboard', 'ChallengeController@leaderBoard')->name('challenge.ajax.leaderboard');
+    Route::post('challenge/clear', 'ChallengeController@clear')->name('challenge.clear');
 });
