@@ -7,6 +7,7 @@ use App\Models\Work;
 use App\Models\WxUser;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -101,6 +102,32 @@ class User extends Authenticatable
             $this->platforms.=';'.$platform;
             $this->save();
         }
+    }
+
+    static public function findOrCreateByPlatform($platform,$datas)
+    {
+        $user = null;
+        switch ($platform) {
+            case self::PLATFORM_WEIXIN:
+                $user = User::wherehas($platform, function($query) use ($datas){
+                    $query->where('open_id', $datas['open_id']);
+                })->first();
+
+                if ($user == null) {
+                    $user = User::create([
+                        'name'     => 'auto',
+                        'email'    => $datas['open_id'].'@bm.com',
+                        'password' => Hash::make(str_random(16)),
+                        'platforms'=> self::PLATFORM_WEIXIN
+                    ]);
+                    $user->wx_user()->create([
+                        'open_id' => $datas['open_id'],
+                        'union_id' => $datas['union_id']
+                    ]);
+                }
+                break;
+        }
+        return $user;
     }
 
 }

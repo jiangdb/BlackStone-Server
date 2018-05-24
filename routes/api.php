@@ -55,3 +55,34 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api\V1', 'as' => 'api.v1.'], fun
     */
 });
 
+Route::group(['prefix' => 'v2', 'namespace' => 'Api\V2', 'as' => 'api.v2.'], function(){
+
+    Route::group(['prefix' => 'user', 'as' => 'user.'], function() {
+        Route::post('/login', 'UserController@login')->name('login');
+        Route::put('/update', 'UserController@update')->name('update')->middleware(['jwt.auth']);
+    });
+
+    Route::group(['prefix' => 'device', 'as' => 'device.'], function() {
+        Route::get('/', 'DeviceController@index')->name('index');
+        Route::post('/register', 'DeviceController@register')->name('register');
+        Route::put('/online', 'DeviceController@online')->name('online');
+        Route::get('/ota/{model}', 'DeviceController@getOta')->name('ota')->middleware(['jwt.auth']);
+        Route::get('/ota/{id}/download', 'DeviceController@downloadOta')->name('ota.download');
+    });
+
+    Route::get('/token/refresh', 'TokenController@refresh');
+
+    Route::group(['prefix' => 'work', 'middleware' => ['jwt.auth'], 'as' => 'work.'], function() {
+        Route::get('/', 'WorkController@index')->name('index');
+        Route::get('/{id}', 'WorkController@show')->name('show');
+        Route::post('/', 'WorkController@store')->name('store');
+        Route::delete('/{id}', 'WorkController@destroy')->name('delete');
+    });
+
+    Route::group(['prefix' => 'challenge', 'middleware' => ['jwt.auth'], 'as' => 'challenge.'], function() {
+        Route::get('/leaderboard', 'ChallengeController@leaderBoard')->name('leaderboard');
+        Route::post('/', 'ChallengeController@store')->name('store');
+    });
+});
+
+Route::get('/test', 'HomeController@test');

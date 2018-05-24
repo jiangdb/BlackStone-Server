@@ -47,4 +47,42 @@ class Work extends Model
     public function device() {
         return $this->belongsTo(Device::class);
     }
+
+    public function getFormattedWorkTimeAttribute()
+    {
+        return gmdate('i:s', $this->work_time);
+    }
+
+    public function getScaleNumberAttribute()
+    {
+        $data = json_decode($this->data);
+        return $data[0][1] ? 2:1;
+    }
+
+    public function getDatasAttribute()
+    {
+        return json_decode($this->data);
+    }
+
+    public function getLastDataAttribute()
+    {
+        $datas = json_decode($this->data);
+        if (!$datas) return [null,null,null];
+        return end($datas);
+    }
+
+    public function getPresetWaterWeightAttribute()
+    {
+        return $this->bean_weight * $this->water_ratio;
+    }
+
+    public function getRealWaterRatioAttribute()
+    {
+        $datas = json_decode($this->data);
+        if (!$datas) return 0;
+
+        $last = end($datas);
+
+        return $last[1] ? $last[1] / $this->bean_weight : $last[2] / $this->bean_weight;
+    }
 }

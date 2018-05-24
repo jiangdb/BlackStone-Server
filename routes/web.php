@@ -21,6 +21,8 @@ Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
+Route::get('share/{id}', 'ShareController@share')->name('share');
+
 Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'as' => 'admin.', 'namespace' => 'Admin'], function(){
     Route::get('/', 'DashboardController@index')->name('dashboard');
     Route::get('firmware/{firmware}/download', 'FirmwareController@download')->name('firmware.download');
