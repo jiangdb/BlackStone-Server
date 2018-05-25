@@ -70,7 +70,7 @@ Route::group(['prefix' => 'v2', 'namespace' => 'Api\V2', 'as' => 'api.v2.'], fun
         Route::get('/ota/{id}/download', 'DeviceController@downloadOta')->name('ota.download');
     });
 
-    Route::get('/token/refresh', 'TokenController@refresh');
+    Route::get('/token/refresh', 'TokenController@refresh')->name('token.refresh');
 
     Route::group(['prefix' => 'work', 'middleware' => ['jwt.auth'], 'as' => 'work.'], function() {
         Route::get('/', 'WorkController@index')->name('index');

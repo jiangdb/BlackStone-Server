@@ -50,7 +50,7 @@ class Work extends Model
 
     public function getFormattedWorkTimeAttribute()
     {
-        return gmdate('i:s', $this->work_time);
+        return gmdate('i:s', $this->work_time/1000);
     }
 
     public function getScaleNumberAttribute()
@@ -83,6 +83,7 @@ class Work extends Model
 
         $last = end($datas);
 
-        return $last[1] ? $last[1] / $this->bean_weight : $last[2] / $this->bean_weight;
+        $ratio = $last[1] ? $last[1] / $this->bean_weight : $last[2] / $this->bean_weight;
+        return number_format($ratio,1);
     }
 }

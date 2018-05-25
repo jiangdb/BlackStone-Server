@@ -218,30 +218,22 @@
 	$(function () {
 		@if ($work->datas)
 		@if ($work->scale_number == 2)
-		var chartDatas = [
-			@foreach( $work->datas as $index => $data)
+		var extract = [
+			@foreach( $work->datas as $data)
 			{
-				index: {{ $index }},
-				extract: {{ $data[1]??'null' }},
-				total: {{ $data[2] }},
+			x:{{ $data[0] }},
+			y:{{ $data[1] }},
 			},
 			@endforeach
-			];
-		var length = chartDatas.length;
-		var extract = [];
-		var total = [];
-		for( var i = 0; i<length; i++) {
-	      let data = chartDatas[ i ]
-	      extract.push({
-	      	x: parseFloat(i/10),
-	      	y: parseFloat(data.extract.toFixed(1))
-	      })
-	      total.push({
-	      	x: parseFloat(i/10),
-	      	y: parseFloat(data.total.toFixed(1))
-	      })
-	    }
-
+		];
+		var total = [
+			@foreach( $work->datas as $data)
+			{
+				x:{{ $data[0] }},
+				y:{{ $data[2] }},
+			},
+			@endforeach
+		];
 	    Highcharts.chart('chart',{
 	    	chart: {
 	        	type: 'area',
@@ -257,9 +249,9 @@
 	          	series: {
 		            marker: {
 		                enabled: false
-		            }
-		        },
-
+		            },
+					enableMouseTracking: false
+				},
 		    },
 	    	series: [
 		    	{
@@ -300,7 +292,14 @@
 			    }, 
 		    ],
 		    xAxis: {
-		        lineWidth:2,
+				labels: {
+					formatter: function() {
+						var minutes = Math.floor(this.value / 60000);
+						var seconds = ((this.value % 60000) / 1000).toFixed(0);
+						return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+					}
+				},
+				lineWidth:2,
 	          	lineColor: '#ccc',
 	          	tickLength: 0,
           		tickAmount: 6,
@@ -311,33 +310,17 @@
 			    	enabled: false
 			    },
 			    min: 0,
-          		tickAmount: 5,
-          		plotLines: [{
-		            value: 0,
-		            width: 1,
-		            color: '#333'
-	          	}],
 			}
 	    });
 		@else
-		var chartDatas = [
-			@foreach( $work->datas as $index => $data)
+		var total = [
+			@foreach( $work->datas as $data)
 			{
-				index: {{ $index }},
-				total: {{ $data[2] }},
+				x:{{ $data[0] }},
+				y:{{ $data[2] }},
 			},
 			@endforeach
-			];
-		var length = chartDatas.length;
-		var total = [];
-		for( var i = 0; i<length; i++) {
-			let data = chartDatas[ i ]
-			total.push({
-				x: parseFloat(i/10),
-				y: parseFloat(data.total.toFixed(1))
-			})
-		}
-
+		];
 		Highcharts.chart('chart',{
 			chart: {
 				type: 'area',
@@ -353,9 +336,9 @@
 				series: {
 					marker: {
 						enabled: false
-					}
+					},
+					enableMouseTracking: false
 				},
-
 			},
 			series: [
 				{
@@ -379,6 +362,13 @@
 				},
 			],
 			xAxis: {
+				labels: {
+					formatter: function() {
+						var minutes = Math.floor(this.value / 60000);
+						var seconds = ((this.value % 60000) / 1000).toFixed(0);
+						return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+					}
+				},
 				lineWidth:2,
 				lineColor: '#ccc',
 				tickLength: 0,
@@ -390,12 +380,6 @@
 					enabled: false
 				},
 				min: 0,
-				tickAmount: 5,
-				plotLines: [{
-					value: 0,
-					width: 1,
-					color: '#333'
-				}],
 			}
 		});
 		@endif
